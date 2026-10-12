@@ -1,0 +1,6 @@
+batiment,ressource,valeur,date,seuil
+Bibliotheque,electricite,520.00,2026-10-01 08:00,400.00
+Residence,chauffage,abc,2026-10-01 08:00,250.00
+Administration,eau,20.00
+,eau,10.00,2026-10-01 08:00,25.00
+Salles_Cours,eau,15.00,2026-10-01 08:00,30.00

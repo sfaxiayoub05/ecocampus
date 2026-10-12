@@ -1,0 +1,6 @@
+# fichiers generes : ne jamais les versionner
+*.o
+*.exe
+c/ecocompus
+c/eco_asan
+data/data.json
