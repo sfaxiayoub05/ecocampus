@@ -23,14 +23,7 @@
  *  - Appelle gestion.c (Saif) : menus 1 a 4 et 7.
  *  - Appelle analyse.c (Ahmed) : menus 5 et 6.
  *  - Appelle export.c (Ayoub) : menu 8.
- * Usage : ./ecocompus [fichier.csv]     (a lancer depuis le dossier c/) */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "gestion.h"
-
-#define CSV_DEFAUT  "../data/measures_in.csv"
-#define JSON_SORTIE "../data/data.json"
+ * Usage : ./ecocompus [fichier.csv]     (a lancer depuis le dossier c/) *
 
 /* Lit une ligne de texte au clavier, sans le retour a la ligne */
 static void lire_texte(const char *invite, char *dest, int taille) {
