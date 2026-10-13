@@ -1,0 +1,21 @@
+batiment,ressource,valeur,date,seuil
+Bibliotheque,electricite,520.00,2026-10-01 08:00,400.00
+Bibliotheque,electricite,340.50,2026-10-02 08:00,400.00
+Bibliotheque,electricite,329.60,2026-10-03 08:00,400.00
+Bibliotheque,eau,18.50,2026-10-01 08:00,25.00
+Laboratoire_Info,electricite,610.00,2026-10-01 08:00,700.00
+Laboratoire_Info,electricite,745.00,2026-10-02 08:00,700.00
+Laboratoire_Info,eau,80.00,2026-10-01 08:00,100.00
+Laboratoire_Info,eau,104.00,2026-10-02 08:00,100.00
+Residence,chauffage,300.00,2026-10-01 08:00,250.00
+Residence,chauffage,230.00,2026-10-02 08:00,250.00
+Residence,chauffage,255.00,2026-10-03 08:00,250.00
+Residence,eau,60.00,2026-10-01 08:00,90.00
+Residence,electricite,410.00,2026-10-01 08:00,450.00
+Administration,eau,20.00,2026-10-01 08:00,25.00
+Administration,eau,22.50,2026-10-02 08:00,25.00
+Administration,electricite,280.00,2026-10-01 08:00,300.00
+Administration,chauffage,150.00,2026-10-01 08:00,200.00
+Salles_Cours,electricite,500.00,2026-10-01 08:00,480.00
+Salles_Cours,chauffage,190.00,2026-10-01 08:00,220.00
+Salles_Cours,eau,15.00,2026-10-01 08:00,30.00
