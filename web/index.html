@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EcoCampus : suivi énergétique du campus</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- Écran de bienvenue EcoCampus -->
+  <div id="ec-intro" class="ec-intro">
+    <div class="ec-intro-contenu">
+
+      <div class="ec-intro-texte">
+        <span class="ec-intro-sur-titre">SMART CAMPUS · SUSTAINABLE FUTURE</span>
+
+        <h1>
+          WELCOME<br>
+          TO<br>
+          <span>EcoCampus</span>
+        </h1>
+
+        <p>
+          Bienvenue sur EcoCampus, votre plateforme intelligente
+          de suivi et de gestion des ressources énergétiques.
+        </p>
+      </div>
+
+      <div class="ec-intro-logo-zone">
+        <div class="ec-intro-logo-cercle">
+          <img src="assets/logo-ecocampus.svg" alt="Logo EcoCampus" class="ec-intro-logo">
+        </div>
+
+        <h2>EcoCampus</h2>
+        <span>SMART CAMPUS MANAGEMENT</span>
+
+        <div class="ec-intro-separateur"></div>
+
+        <p>Ensemble pour un campus plus durable.</p>
+      </div>
+
+      <div class="ec-intro-chargement">
+        <div class="ec-intro-chargement-texte">
+          <span>Initialisation de la plateforme...</span>
+          <span class="ec-intro-pourcentage">0%</span>
+        </div>
+
+        <div class="ec-intro-barre">
+          <div class="ec-intro-progression"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <a class="visually-hidden-focusable ec-saut" href="#contenu">Aller au contenu</a>
+
+  <!-- En-tête avec Logo EcoCampus & Bouton Watti -->
+  <header class="ec-entete">
+    <nav class="container-xxl d-flex flex-wrap align-items-center justify-content-between gap-2 py-3"
+      aria-label="Navigation principale">
+      <a class="ec-marque" href="index.html">
+        <img src="assets/logo-ecocampus.svg" alt="Logo EcoCampus" class="ec-logo-img" width="32" height="32">
+        <span>EcoCampus</span>
+      </a>
+      <div class="d-flex flex-wrap align-items-center gap-2">
+        <button type="button" class="btn btn-sm btn-ec-clair" id="open-watti-btn">
+          <img src="assets/watti.svg" alt="" width="18" height="18" aria-hidden="true"> Assistant Watti
+        </button>
+        <button type="button" class="btn btn-sm btn-ec-clair" id="btn-actualiser">
+          <i class="bi bi-arrow-clockwise" aria-hidden="true"></i> Actualiser
+        </button>
+        <label class="btn btn-sm btn-ec-clair mb-0" for="input-fichier">
+          <i class="bi bi-upload" aria-hidden="true"></i> Charger un fichier
+        </label>
+        <input type="file" id="input-fichier" accept=".json,application/json" class="visually-hidden">
+        <button type="button" class="btn btn-sm btn-ec-clair" id="btn-theme"
+          aria-label="Basculer entre mode clair et sombre">
+          <i class="bi bi-moon-stars" id="icone-theme" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="contenu" class="container-xxl pb-5">
+
+    <div id="zone-erreur" role="alert"></div>
+
+    <!-- État global du campus -->
+    <section class="ec-etat" aria-labelledby="etat-titre">
+      <div class="ec-etat-texte">
+        <h1 id="etat-titre">Chargement des mesures…</h1>
+        <p id="etat-detail" class="mb-0"></p>
+      </div>
+      <div class="ec-etat-jauge">
+        <div class="ec-jauge" role="img" id="jauge" aria-label="Répartition des mesures">
+          <span class="ec-jauge-ok" id="jauge-ok"></span>
+          <span class="ec-jauge-alerte" id="jauge-alerte"></span>
+        </div>
+        <p class="ec-jauge-legende mb-0" id="jauge-legende"></p>
+      </div>
+    </section>
+
+    <!-- Chiffres clés (selon les filtres) -->
+    <section class="ec-chiffres" aria-label="Chiffres clés">
+      <div><span class="ec-chiffre-valeur" id="chiffre-mesures">0</span><span class="ec-chiffre-nom">mesures
+          affichées</span></div>
+      <div><span class="ec-chiffre-valeur" id="chiffre-batiments">0</span><span class="ec-chiffre-nom">bâtiments</span>
+      </div>
+      <div><span class="ec-chiffre-valeur" id="chiffre-alertes">0</span><span class="ec-chiffre-nom">alertes</span>
+      </div>
+      <div><span class="ec-chiffre-valeur" id="chiffre-depassement">0 %</span><span class="ec-chiffre-nom"
+          id="chiffre-depassement-nom">pire dépassement</span></div>
+    </section>
+
+    <!-- Filtres -->
+    <section class="ec-panneau" aria-labelledby="titre-filtres">
+      <h2 id="titre-filtres" class="ec-titre-panneau">Rechercher et filtrer</h2>
+      <form class="row g-3 align-items-end" id="formulaire-filtres" onsubmit="return false" role="search">
+        <div class="col-12 col-md-6 col-xl-3">
+          <label for="f-texte" class="form-label">Bâtiment</label>
+          <input type="search" class="form-control" id="f-texte" placeholder="Bibliothèque" autocomplete="off">
+        </div>
+        <div class="col-6 col-md-3 col-xl-2">
+          <label for="f-ressource" class="form-label">Ressource</label>
+          <select class="form-select" id="f-ressource">
+            <option value="">Toutes</option>
+            <option value="electricite">Électricité</option>
+            <option value="eau">Eau</option>
+            <option value="chauffage">Chauffage</option>
+          </select>
+        </div>
+        <div class="col-6 col-md-3 col-xl-2">
+          <label for="f-debut" class="form-label">Du</label>
+          <input type="date" class="form-control" id="f-debut">
+        </div>
+        <div class="col-6 col-md-3 col-xl-2">
+          <label for="f-fin" class="form-label">Au</label>
+          <input type="date" class="form-control" id="f-fin">
+        </div>
+        <div class="col-6 col-md-3 col-xl-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
+          <div class="form-check form-switch mb-0">
+            <input class="form-check-input" type="checkbox" role="switch" id="f-alertes">
+            <label class="form-check-label" for="f-alertes">Alertes seulement</label>
+          </div>
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="f-reset">Réinitialiser</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Graphique et statistiques -->
+    <div class="row g-4 mb-4">
+      <section class="col-12 col-xl-7" aria-labelledby="titre-graphique">
+        <div class="ec-panneau h-100 mb-0">
+          <h2 id="titre-graphique" class="ec-titre-panneau">Niveau de consommation par bâtiment</h2>
+          <p class="ec-note">Moyenne des mesures en pourcentage de leur seuil. Au-dessus de 100 %, le seuil est dépassé.
+          </p>
+          <div class="ec-graphique">
+            <canvas id="graphique" role="img" aria-label="Histogramme du niveau de consommation par bâtiment"></canvas>
+          </div>
+          <p class="ec-vide d-none" id="graphique-vide">Aucune donnée à représenter avec ces filtres.</p>
+        </div>
+      </section>
+
+      <section class="col-12 col-xl-5" aria-labelledby="titre-stats">
+        <div class="ec-panneau h-100 mb-0">
+          <h2 id="titre-stats" class="ec-titre-panneau">Statistiques calculées par le module C</h2>
+          <p class="ec-note">Total, moyenne, maximum et minimum par bâtiment et par ressource, sur toutes les mesures.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm align-middle ec-table-stats">
+              <thead>
+                <tr>
+                  <th scope="col">Bâtiment</th>
+                  <th scope="col">Ressource</th>
+                  <th scope="col" class="text-end">Total</th>
+                  <th scope="col" class="text-end">Moy.</th>
+                  <th scope="col" class="text-end">Max</th>
+                  <th scope="col" class="text-end">Min</th>
+                </tr>
+              </thead>
+              <tbody id="corps-stats"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Tableau des mesures -->
+    <section class="ec-panneau" aria-labelledby="titre-mesures">
+      <div class="d-flex flex-wrap align-items-baseline justify-content-between gap-2">
+        <h2 id="titre-mesures" class="ec-titre-panneau">Mesures</h2>
+        <p class="ec-note mb-0" id="compteur-mesures" aria-live="polite"></p>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-middle ec-table" id="table-mesures">
+          <thead>
+            <tr>
+              <th scope="col" data-cle="batiment"><button type="button" class="ec-tri" data-tri="batiment">Bâtiment <i
+                    class="bi bi-chevron-expand" aria-hidden="true"></i></button></th>
+              <th scope="col" data-cle="ressource"><button type="button" class="ec-tri" data-tri="ressource">Ressource
+                  <i class="bi bi-chevron-expand" aria-hidden="true"></i></button></th>
+              <th scope="col" data-cle="valeur" class="text-end"><button type="button" class="ec-tri"
+                  data-tri="valeur">Valeur <i class="bi bi-chevron-expand" aria-hidden="true"></i></button></th>
+              <th scope="col" data-cle="seuil" class="text-end"><button type="button" class="ec-tri"
+                  data-tri="seuil">Seuil <i class="bi bi-chevron-expand" aria-hidden="true"></i></button></th>
+              <th scope="col" data-cle="date"><button type="button" class="ec-tri" data-tri="date">Date <i
+                    class="bi bi-chevron-expand" aria-hidden="true"></i></button></th>
+              <th scope="col" data-cle="taux"><button type="button" class="ec-tri" data-tri="taux">État <i
+                    class="bi bi-chevron-expand" aria-hidden="true"></i></button></th>
+            </tr>
+          </thead>
+          <tbody id="corps-mesures"></tbody>
+        </table>
+      </div>
+      <div class="ec-vide d-none" id="vide-mesures">
+        <p class="mb-2">Aucune mesure ne correspond à ces filtres.</p>
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="vide-reset">Réinitialiser les
+          filtres</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Widget Chatbot Watti -->
+  <div id="watti-chat-container" class="watti-hidden" aria-label="Assistant Watti">
+    <div class="watti-header">
+      <div class="watti-title">
+        <img src="assets/watti.svg" alt="Watti Avatar" width="24" height="24">
+        <span>Watti — Assistant Campus</span>
+      </div>
+      <button type="button" id="close-watti-btn" aria-label="Fermer le chat">&times;</button>
+    </div>
+    <div id="watti-messages" class="watti-messages-body">
+      <div class="watti-msg bot">
+        Bonjour ! Je suis <strong>Watti</strong>, votre assistant intelligent. Posez-moi vos questions sur la
+        consommation du campus ou les alertes !
+      </div>
+    </div>
+    <div class="watti-input-area">
+      <input type="text" id="watti-input" placeholder="Consommation de la bibliothèque..." autocomplete="off">
+      <button type="button" id="watti-send-btn" class="btn btn-sm">Envoyer</button>
+    </div>
+  </div>
+
+  <!-- Pied de page -->
+  <footer class="ec-pied">
+    <div class="container-xxl d-flex flex-wrap justify-content-between gap-2">
+      <span>Atelier mini-projet DSI2, année universitaire 2026 / 2027</span>
+      <span id="pied-source">Données produites par le module C (data.json)</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/donnees.js"></script>
+  <script src="js/filtres.js"></script>
+  <script src="js/graphique.js"></script>
+  <script src="js/groqConfig.js"></script>
+  <script src="js/questionLocal.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    (() => {
+      const intro = document.getElementById("ec-intro");
+      const pourcentage = document.querySelector(".ec-intro-pourcentage");
+
+      if (!intro) return;
+
+      const duree = 3200;
+      const debut = performance.now();
+
+      function actualiserProgression(maintenant) {
+        const progression = Math.min((maintenant - debut) / duree, 1);
+
+        if (pourcentage) {
+          pourcentage.textContent = Math.round(progression * 100) + "%";
+        }
+
+        if (progression < 1) {
+          requestAnimationFrame(actualiserProgression);
+        } else {
+          setTimeout(() => {
+            intro.classList.add("ec-intro-fin");
+
+            setTimeout(() => {
+              intro.remove();
+            }, 700);
+
+          }, 150);
+        }
+      }
+
+      requestAnimationFrame(actualiserProgression);
+    })();
+  </script>
+</body>
+
+</html>
