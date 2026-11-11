@@ -1,0 +1,712 @@
+/* ==========================================================================
+   EcoCampus : feuille de style (s'ajoute à Bootstrap 5.3)
+   Palette : vert forêt, gris-vert neutres, rouge réservé aux alertes.
+   ========================================================================== */
+
+:root {
+  --ec-fond:        #f1f4f2;
+  --ec-panneau:     #ffffff;
+  --ec-encre:       #15251f;
+  --ec-secondaire:  #56675f;
+  --ec-bord:        #d3dcd7;
+  --ec-entete:      #12372a;
+  --ec-vert:        #1e5b45;
+  --ec-ok:          #2f7d5b;
+  --ec-alerte:      #c23b32;
+  --ec-alerte-fond: #fbe9e7;
+  --ec-alerte-texte:#8f241d;
+  --ec-rayon:       6px;
+}
+
+[data-bs-theme="dark"] {
+  --ec-fond:        #0e1713;
+  --ec-panneau:     #15231d;
+  --ec-encre:       #e6eee9;
+  --ec-secondaire:  #9db0a6;
+  --ec-bord:        #27392f;
+  --ec-entete:      #0a110e;
+  --ec-vert:        #5fbf98;
+  --ec-ok:          #5fbf98;
+  --ec-alerte:      #ff7a70;
+  --ec-alerte-fond: #3a1b19;
+  --ec-alerte-texte:#ffb4ad;
+}
+
+body {
+  background: var(--ec-fond);
+  color: var(--ec-encre);
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.55;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ec-vert);
+  outline-offset: 2px;
+}
+
+.ec-saut {
+  position: absolute;
+  z-index: 10;
+  left: 1rem;
+  top: 1rem;
+  padding: .5rem 1rem;
+  background: var(--ec-panneau);
+  color: var(--ec-encre);
+}
+
+/* ---------- En-tête ---------- */
+
+.ec-entete {
+  background: var(--ec-entete);
+  color: #eaf3ee;
+}
+
+.ec-marque {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: inherit;
+  text-decoration: none;
+}
+
+.btn-ec-clair {
+  color: #eaf3ee;
+  border: 1px solid rgba(255, 255, 255, .35);
+  background: transparent;
+}
+.btn-ec-clair:hover,
+.btn-ec-clair:focus-visible {
+  color: #fff;
+  background: rgba(255, 255, 255, .14);
+  border-color: rgba(255, 255, 255, .6);
+}
+
+/* ---------- État global ---------- */
+
+.ec-etat {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: end;
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--ec-bord);
+}
+
+.ec-etat h1 {
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin-bottom: .6rem;
+  max-width: 24ch;
+}
+.ec-etat.a-des-alertes h1 { color: var(--ec-alerte); }
+
+#etat-detail { color: var(--ec-secondaire); max-width: 60ch; }
+
+.ec-jauge {
+  display: flex;
+  height: 16px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--ec-bord);
+}
+.ec-jauge-ok     { background: var(--ec-ok); }
+.ec-jauge-alerte { background: var(--ec-alerte); }
+.ec-jauge-legende {
+  margin-top: .5rem;
+  font-size: .9rem;
+  color: var(--ec-secondaire);
+}
+
+/* ---------- Chiffres clés ---------- */
+
+.ec-chiffres {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 0 1.5rem;
+  border-bottom: 1px solid var(--ec-bord);
+}
+.ec-chiffres > div {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.25rem;
+  border-left: 1px solid var(--ec-bord);
+}
+.ec-chiffres > div:first-child { border-left: 0; padding-left: 0; }
+.ec-chiffre-valeur {
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+.ec-chiffre-nom { font-size: .9rem; color: var(--ec-secondaire); }
+
+/* ---------- Panneaux ---------- */
+
+.ec-panneau {
+  background: var(--ec-panneau);
+  border: 1px solid var(--ec-bord);
+  border-radius: var(--ec-rayon);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.ec-titre-panneau {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: .75rem;
+}
+.ec-note {
+  font-size: .88rem;
+  color: var(--ec-secondaire);
+  margin-bottom: 1rem;
+}
+.ec-panneau .form-label {
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--ec-secondaire);
+  margin-bottom: .25rem;
+}
+
+.ec-graphique { position: relative; height: 340px; }
+
+.ec-vide {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--ec-secondaire);
+}
+
+/* ---------- Tableaux ---------- */
+
+.ec-table, .ec-table-stats {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--ec-encre);
+  --bs-table-border-color: var(--ec-bord);
+  margin-bottom: 0;
+}
+.ec-table thead th,
+.ec-table-stats thead th {
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--ec-secondaire);
+  white-space: nowrap;
+}
+.ec-table-stats { font-size: .88rem; }
+
+.ec-tri {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.ec-tri:hover { color: var(--ec-encre); }
+.ec-tri .bi { font-size: .75rem; margin-left: .15rem; opacity: .6; }
+th[aria-sort="ascending"] .ec-tri,
+th[aria-sort="descending"] .ec-tri { color: var(--ec-encre); font-weight: 700; }
+th[aria-sort="ascending"] .ec-tri .bi,
+th[aria-sort="descending"] .ec-tri .bi { opacity: 1; }
+
+/* Ligne en alerte : fond rouge pâle et liseré à gauche */
+.ec-table > tbody > tr.ec-ligne-alerte > * {
+  --bs-table-bg: var(--ec-alerte-fond);
+  color: var(--ec-alerte-texte);
+}
+.ec-table > tbody > tr.ec-ligne-alerte > :first-child {
+  background-image: linear-gradient(var(--ec-alerte), var(--ec-alerte));
+  background-size: 4px 100%;
+  background-repeat: no-repeat;
+  padding-left: .9rem;
+}
+
+.ec-badge {
+  display: inline-block;
+  padding: .2rem .55rem;
+  border-radius: 3px;
+  font-size: .8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ec-badge-alerte { background: var(--ec-alerte); color: #fff; }
+[data-bs-theme="dark"] .ec-badge-alerte { color: #2a0d0b; }
+.ec-badge-ok { background: transparent; color: var(--ec-ok); border: 1px solid var(--ec-bord); }
+
+.ec-pastille {
+  display: inline-block;
+  width: .7rem;
+  height: .7rem;
+  border-radius: 2px;
+  margin-right: .45rem;
+  vertical-align: baseline;
+}
+
+/* ---------- Pied de page ---------- */
+
+.ec-pied {
+  border-top: 1px solid var(--ec-bord);
+  padding: 1.25rem 0;
+  font-size: .85rem;
+  color: var(--ec-secondaire);
+}
+
+/* ---------- Messages d'erreur ---------- */
+
+#zone-erreur:not(:empty) { margin-top: 1.5rem; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 767.98px) {
+  .ec-etat { grid-template-columns: 1fr; gap: 1.25rem; padding-top: 1.75rem; }
+  .ec-chiffres { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ec-chiffres > div:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .ec-chiffres > div:nth-child(n+3) { border-top: 1px solid var(--ec-bord); }
+  .ec-graphique { height: 280px; }
+}
+
+@media print {
+  .ec-entete, #formulaire-filtres, .ec-saut { display: none; }
+  body { background: #fff; }
+}
+
+
+
+/* ==========================================================================
+   Logo EcoCampus & Widget Chatbot Watti
+   ========================================================================== */
+
+.ec-logo-img {
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+#open-watti-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+/* Conteneur principal de Watti */
+#watti-chat-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  height: 480px;
+  max-height: calc(100vh - 48px);
+  background: var(--ec-panneau);
+  border: 1px solid var(--ec-bord);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 1050;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#watti-chat-container.watti-hidden {
+  transform: translateY(120%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* En-tête de la fenêtre du Chat */
+.watti-header {
+  background: var(--ec-entete);
+  color: #eaf3ee;
+  padding: .75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+}
+
+.watti-title {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 700;
+  font-size: .95rem;
+}
+
+#close-watti-btn {
+  background: transparent;
+  border: none;
+  color: #eaf3ee;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 .25rem;
+  opacity: .8;
+}
+#close-watti-btn:hover {
+  opacity: 1;
+}
+
+/* Corps des messages */
+.watti-messages-body {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  background: var(--ec-fond);
+}
+
+.watti-msg {
+  max-width: 85%;
+  padding: .6rem .85rem;
+  border-radius: 10px;
+  font-size: .88rem;
+  line-height: 1.45;
+  word-wrap: break-word;
+}
+
+.watti-msg.bot {
+  align-self: flex-start;
+  background: var(--ec-panneau);
+  color: var(--ec-encre);
+  border: 1px solid var(--ec-bord);
+  border-bottom-left-radius: 2px;
+}
+
+.watti-msg.user {
+  align-self: flex-end;
+  background: var(--ec-vert);
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+}
+
+.watti-msg.loading {
+  font-style: italic;
+  opacity: .8;
+}
+
+/* Zone d'envoi */
+.watti-input-area {
+  padding: .75rem;
+  background: var(--ec-panneau);
+  border-top: 1px solid var(--ec-bord);
+  display: flex;
+  gap: .5rem;
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+}
+
+.watti-input-area input {
+  flex: 1;
+  background: var(--ec-fond);
+  color: var(--ec-encre);
+  border: 1px solid var(--ec-bord);
+  border-radius: 6px;
+  padding: .4rem .75rem;
+  font-size: .88rem;
+}
+
+.watti-input-area input:focus {
+  outline: 2px solid var(--ec-vert);
+}
+
+.watti-input-area button {
+  background: var(--ec-vert);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: .4rem .85rem;
+  font-weight: 500;
+}
+.watti-input-area button:hover {
+  opacity: .9;
+}
+
+@media (max-width: 575.98px) {
+  #watti-chat-container {
+    bottom: 12px;
+    right: 12px;
+    width: calc(100vw - 24px);
+    height: 420px;
+  }
+}
+
+/* ==========================================================================
+   Écran de bienvenue EcoCampus
+   ========================================================================== */
+
+.ec-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 72% 48%, rgba(45, 111, 78, .18), transparent 30%),
+    radial-gradient(circle at 20% 80%, rgba(30, 91, 69, .12), transparent 35%),
+    #101713;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .7s ease, visibility .7s ease;
+}
+
+.ec-intro.ec-intro-fin {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ec-intro::before {
+  content: "";
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  left: 25%;
+  top: 15%;
+  border: 1px solid rgba(255, 255, 255, .035);
+  border-radius: 50%;
+  box-shadow: 0 0 100px rgba(47, 125, 91, .08);
+}
+
+.ec-intro-contenu {
+  position: relative;
+  width: min(1200px, 90%);
+  min-height: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 3rem;
+}
+
+.ec-intro-texte {
+  animation: ec-intro-apparition .9s ease both;
+}
+
+.ec-intro-sur-titre {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: #8ab89d;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .3rem;
+}
+
+.ec-intro-texte h1 {
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: -.06em;
+  color: #e8eee9;
+  margin-bottom: 2rem;
+}
+
+.ec-intro-texte h1 span {
+  color: #5fbf98;
+}
+
+.ec-intro-texte p {
+  max-width: 480px;
+  color: #a6b5ab;
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+
+.ec-intro-logo-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: ec-intro-apparition 1.2s ease both;
+}
+
+.ec-intro-logo-cercle {
+  width: 175px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 5px solid rgba(95, 191, 152, .35);
+  box-shadow: 0 0 35px rgba(95, 191, 152, .3);
+  animation: ec-intro-lueur 2s ease-in-out infinite alternate;
+}
+
+.ec-intro-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ec-intro-logo-zone h2 {
+  margin-top: 1.5rem;
+  color: #5fbf98;
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: .35rem;
+  text-transform: uppercase;
+}
+
+.ec-intro-logo-zone > span {
+  color: #a6b5ab;
+  font-size: .75rem;
+  letter-spacing: .3rem;
+}
+
+.ec-intro-separateur {
+  width: 150px;
+  height: 3px;
+  margin: 1.5rem 0;
+  border-radius: 5px;
+  background: #5fbf98;
+}
+
+.ec-intro-logo-zone p {
+  color: #a6b5ab;
+  font-size: .9rem;
+}
+
+/* Barre de progression */
+
+.ec-intro-chargement {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  width: 100%;
+}
+
+.ec-intro-chargement-texte {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: .7rem;
+  color: #a6b5ab;
+  font-size: .85rem;
+}
+
+.ec-intro-pourcentage {
+  color: #5fbf98;
+  font-weight: 700;
+}
+
+.ec-intro-barre {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .12);
+}
+
+.ec-intro-progression {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2f7d5b, #8bd6ae);
+  animation: ec-intro-charger 3.2s linear forwards;
+}
+
+@keyframes ec-intro-charger {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes ec-intro-lueur {
+  from { box-shadow: 0 0 25px rgba(95, 191, 152, .2); }
+  to { box-shadow: 0 0 55px rgba(95, 191, 152, .45); }
+}
+
+@keyframes ec-intro-apparition {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 767.98px) {
+  .ec-intro-contenu {
+    min-height: 100vh;
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 2rem;
+    padding: 2rem 0 6rem;
+  }
+
+  .ec-intro-texte {
+    text-align: center;
+  }
+
+  .ec-intro-texte h1 {
+    font-size: 3.5rem;
+  }
+
+  .ec-intro-texte p {
+    margin: auto;
+    font-size: .9rem;
+  }
+
+  .ec-intro-sur-titre {
+    font-size: .65rem;
+  }
+
+  .ec-intro-logo-cercle {
+    width: 110px;
+    height: 110px;
+  }
+
+  .ec-intro-logo-zone h2 {
+    font-size: 1.2rem;
+  }
+
+  .ec-intro-logo-zone > span {
+    font-size: .6rem;
+  }
+
+  .ec-intro-chargement {
+    bottom: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ec-intro,
+  .ec-intro * {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+
+/* Effet de frappe progressive de Watti */
+
+.watti-msg.typing::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left: 3px;
+    vertical-align: middle;
+    background: var(--ec-vert);
+    animation: watti-clignotement .7s infinite;
+}
+
+@keyframes watti-clignotement {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
